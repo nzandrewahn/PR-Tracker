@@ -1,20 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import HomeScreen from './src/screens/HomeScreen';
+import {Provider as RecordProvider} from './src/context/PRContext';
+import CreateRecordScreen from './src/screens/CreateRecordScreen';
+import ShowRecordScreen from './src/screens/ShowRecordScreen';
+import EditRecordScreen from './src/screens/EditRecordScreen'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const navigator = createStackNavigator({
+  Home: HomeScreen,
+  Create: CreateRecordScreen,
+  Show: ShowRecordScreen,
+  Edit: EditRecordScreen,
+}, {
+  initialRouteName: 'Home',
+  defaultNavigationOptions: {
+    title: 'Records', 
+  }
+})
+
+const App = createAppContainer(navigator);
+
+export default () => {
+  return <RecordProvider>
+    <App/>
+  </RecordProvider>
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
